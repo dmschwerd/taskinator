@@ -28,22 +28,31 @@
             </div>
 
             <div class="form-group">
-                <button class="btn" id="save-task">Add Task</button>
+                <button class="btn" id="save-task" type="submit">Add Task</button>
             </div>
         </form>
         
     </header>
 
-    <main calss="page-content">
+    <main class="page-content">
         <section class="task-list-wrapper">
             <h2 class="list-title">Tasks To Do</h2>
-            <ul class="task-list" id="tasks-to-do">
-            </ul>
+            <ul class="task-list" id="tasks-to-do"></ul>
+        </section>
+
+        <section class="task-list-wrapper">
+            <h2 class="list-title">Tasks In Progress</h2>
+            <ul class="task-list" id="tasks-in-progress"></ul>
+        </section>
+
+        <section class="task-list-wrapper">
+            <h2 class="list-title">Tasks Completed</h2>
+            <ul class="task-list" id="tasks-completed"></ul>
         </section>
     </main>
 
     <footer>
-        &copy;2020 by Taskinator
+        &copy;2023 by Taskinator
     </footer>
 
   <script src="./assets/js/script.js"></script>
