@@ -1,3 +1,4 @@
+var tasks = [];
 var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
@@ -25,8 +26,10 @@ var taskFormHandler = function(event) {
         completeEditTask(taskNameInput, taskTypeInput, taskId);
     } else {
         var taskDataObj = {
+            id: "1",
             name: taskNameInput,
-            type: taskTypeInput
+            type: taskTypeInput,
+            status: "to do"
         };
 
         createTaskEl(taskDataObj);
@@ -48,6 +51,13 @@ var taskStatusChangeHandler = function(event) {
     } else if (statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
     }
+
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].status = statusValue;
+        }
+    }
+    console.log(tasks);
 };
 
 var completeEditTask = function(taskName, taskType, taskId) {
@@ -56,6 +66,13 @@ var completeEditTask = function(taskName, taskType, taskId) {
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
 
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].name = taskName;
+            tasks[i].type = taskType;
+        }
+    };
+
     alert("task updated!");
 
     formEl.removeAttribute("data-task-id");
@@ -63,6 +80,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
 };
 
 var createTaskEl = function(taskDataObj) {
+    console.log(taskDataObj);
     // create list item
     var listItemEl = document.createElement("li");
     listItemEl.className = "task-item";
@@ -77,6 +95,9 @@ var createTaskEl = function(taskDataObj) {
 
     var taskActionsEl = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsEl);
+
+    taskDataObj.id = taskIdCounter;
+    tasks.push(taskDataObj);
 
     tasksToDoEl.appendChild(listItemEl);
     taskIdCounter++;
@@ -154,6 +175,15 @@ var editTask = function(taskId) {
 var deleteTask = function(taskId) {
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+
+    var updatedTaskArr = [];
+    for (var i = 0; i < tasks.length; i++) {
+        if(tasks[i].id !== parseInt(taskId)) {
+            updatedTaskArr.push(tasks[i]);
+        }
+    }
+
+    tasks = updatedTaskArr;
 };
 
 // creating new tasks
